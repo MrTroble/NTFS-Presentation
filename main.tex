@@ -142,8 +142,106 @@ Erster und letzter Sektor
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Encrypting File System (EFS)}
+\begin{frame}{Limits - Nothing wrong?!}
+\begin{center}
+\Large
+\begin{table}
+\begin{tabular}{r|l|l}
+\Large Cluster & \Large File Limit & \Large Beschreibung\\
+\hline
+4 KB & 16 TB & kleinste, default\\
+64 KB & 256 TB & ehm. Maximum\\
+2048 KB & 8 PB & Maximum
+\end{tabular}
+\caption{Maximale Cluster Anzahl = $2^{32}-1$}
+\end{table}
+\end{center}
+\end{frame}
 
+
+\begin{frame}{Limits}
+\begin{center}
+\Large
+\begin{table}
+\begin{tabular}{r|c|l}
+\Large Cluster Limit & \Large File Limit & \Large Beschreibung\\
+\hline
+4 KiB & 16 TiB & kleinste, default\\
+64 KiB & 256 TiB & ehm. Maximum\\
+2048 KiB & 8 PiB & Maximum
+\end{tabular}
+\caption{Maximale Cluster Anzahl = $2^{32}-1$}
+\end{table}
+\end{center}
+\end{frame}
+
+\begin{frame}{Aufgabe!}
+\begin{center}
+\huge Wie groß ist das größtmögliche File bei 16KiB Clustern?
+\end{center}
+\end{frame}
+
+\begin{frame}{Lösung!}
+\begin{center}
+\huge 64TiB
+\end{center}
+\end{frame}
+
+\begin{frame}{Aufgabe!}
+\begin{center}
+\huge Wie viel Cluster braucht eine 64KB Datei bei default clustern?
+\end{center}
+\end{frame}
+
+\begin{frame}{Lösung!}
+\begin{center}
+\huge 16
+\end{center}
+\end{frame}
+
+\begin{frame}{Encrypting File System (EFS)}
+\begin{itemize}
+\item Ersetzt durch BitLocker
+\item Cipher Tool
+\item AES / DES / SHA
+\item Account gebunden
+\item Transparent
+\item Backupkeys
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Vorteile}
+\begin{itemize}
+\item Kein weiteres Password
+\item Starke linear Keys
+\item On the fly
+\item Verschiedene Accounts
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Citation Needed (Light)}
+\begin{center}
+\huge Warum wurde es ersetzt?
+\end{center}
+\end{frame}
+
+\begin{frame}{Selfhealing NTFS}
+\begin{itemize}
+\item Bootvorgang
+\item Geht Logs durch
+\item Stellt wieder her
+\item Bad sector reallocation
+\end{itemize}
+\end{frame}
+
+\begin{frame}{NTFS vs FAT}
+\begin{itemize}
+\item kleine Daten direkt im Cache
+\item Bessere Zugriffszeiten
+\item Kompression
+\item Sicherheit
+\item Größere Dateien
+\end{itemize}
 \end{frame}
 
 \begin{frame}
