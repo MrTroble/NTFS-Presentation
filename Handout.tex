@@ -1,0 +1,72 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage[a4paper, margin=3cm]{geometry}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\author{Nico Fröhlich}
+\title{\vspace{-2.5cm}NTFS}
+\begin{document}
+\maketitle
+
+\section{Allgemeines}
+NTFS steht für New Technologie File System und wurde von Microsoft als Nachfolger von FAT bzw HPFS (OS/2) für Windows NT 3.1 eingeführt. Microsoft verwendet seither dieses System für all ihre Produkte. Es entstand als direktes Resultat nach dem Ende der Zusammenarbeit zwischen MS und IBM an OS/2, da MS mit vielen nicht einverstanden war. Das für MS ungenügende HPFS war dabei eine der Hauptgründe für das Ende der Zusammenarbeit.
+
+\section{Master File Table}
+Der Hauptteil des NTFS ist der MFT. In ihm werden Ordner, Dateien und ihre zugehörigen Attribute gespeichert. Kleine Dateien und Ordner werden dabei direkt im MFT gespeichert. Große Dateien, Ordner oder auch Attribute werden hingegen Ausgelagert und nur die Startcluster werden hier als Index hinterlegt. Für Redundanz existieren zwei exakte Kopien des MFT. Für denn Fall, dass der original MFT nicht mehr Lesbar ist verwendet das system einfach den zweiten MFT. Er enthält auch log Dateien des File System, im Falle von Fehlern können damit die Daten wiederhergestellt werden.
+
+\subsection{Attribute und Sicherheit}
+Die Einführung von Attributen für Dateien diente in erster Linie der Sicherheit. Daher kann man bei jeder Datei die Zugriffsrechte verwalten. Des weiteren können auch weitere Informationen wie Erstellungsdatum, Änderungsdatum etc. Sowie weitere Attribute wie Versteckt oder ähnliches einführen.
+
+\section{Kompression}
+Das FS selber hat ein integriertes Kompressionssystem, dieses sorgt dafür, dass Daten ohne ein zwischen Programm direkt beim Lesen und schreiben über die normale System API Komprimiert bzw Dekomprimiert wird ohne, dass das Programm sich darum selber kümmern muss. Dies funktioniert jedoch nur bei einer Clustergröße von 4KiB und kann pro Datei, Ordner oder auf der Gesamten Festplatte angewendet werden.
+
+\section{Limits}
+\begin{table}[h!]
+\centering
+\begin{tabular}{r|c|l}
+\Large Cluster Limit & \Large File Limit & \Large Beschreibung\\
+\hline
+4 KiB & 16 TiB & kleinste, default\\
+64 KiB & 256 TiB & ehm. Maximum\\
+2048 KiB & 8 PiB & Maximum
+\end{tabular}
+\end{table}
+\newpage
+Die maximale Clusteranzahl beträgt $2^{32}-1$. Es gibt zwischen den oben genannten Limitierungen noch jeden zwischen wert, wobei jeder das doppelte des Vorgängers ist (4 KiB, 8 KiB, 16 KiB ... 2048 KiB). Die Cluster können je nach Clustergröße und Sektorgröße unterschiedlich viele Sektoren Enthalten. Dabei müssen die Cluster jedoch eine der gegebenen Clustergrößen sein. Die Berechnungen für Sektoren findet ihr im Handout von Simon. 
+
+\section{Encrypting File System}
+EFS ist ebenfalls wie die Kompression im FS verankert. Somit muss sich kein Programm um die Ver- bzw Entschlüsselung kümmern. Des weiteren können verschiedene Nutzerkonten auf dem gleichen PC eine andere Verschlüsselung nutzen. Für Firmen gibt es auch die Möglichkeit Backupkeys zu generieren, sodass falls jemand sein Password vergisst, die Firma die Daten trotz dessen wieder Entschlüsseln kann. Dennoch würde das System größtenteils von BitLocker abgelöst, da es sehr viele Sicherheitslücken hatte. So wurden zum Beispiel die Temporären Dateien, in denen die Rohdaten zwischen gespeichert wurden, nicht ordnungsgemäß wieder gelöscht.
+
+\section{FAT vs NTFS}
+NTFS bietet gegenüber FAT wesentlich bessere Zugriffszeiten, gerade bei kleinen Dateien. Außerdem ist die Sicherheit durch Zugriffsverwaltung und Verschlüsselungsmöglichkeiten wesentlich höher als bei FAT. Des weiteren ist es stabiler und robuster, durch seine Wiederherstellungsmöglichkeiten als FAT.
+
+\section{Akronyme}
+\begin{table}[h!]
+\begin{tabular}{r|l}
+Akronym & Beschreibung\\
+\hline
+FS & File System\\
+\hline
+NTFS & New Technologie File System\\
+\hline
+EFS & Encrypting File System\\
+\hline
+MFT & Master File Table\\
+\hline
+HPFS & High Performance File System\\
+\hline
+MS & Microsoft
+\end{tabular}
+\end{table}
+
+\section{Quellen}
+Weitere Informationen zu FAT und dem Master Boot Record findet ihr in den Präsentationen und Handouts von Simon und Paul (repectivly).
+
+\begin{itemize}
+\item ntfs.com
+\item docs.microsoft.com/en-us/windows-server/storage/fileserver/ntfs-overview
+\end{itemize}
+
+\end{document}
